@@ -1,15 +1,45 @@
+import { useEffect, useState } from "react";
 import "./App.scss";
 
 function App() {
+  const [time, setTime] = useState(0);
+  const [running, setRunning] = useState(false);
+
+  useEffect(() => {
+    let interval: number | undefined;
+    if (running) {
+      interval = setInterval(() => {
+        setTime((prevTime) => prevTime + 10);
+      }, 10);
+    } else if (!running) {
+      clearInterval(interval);
+    }
+    return () => clearInterval(interval);
+  }, [running]);
+
   return (
     <>
       <section>
         <div className="stopwatch-container">
           <h1>StopWatch</h1>
-          <h3>00:00:00</h3>
+          <h3>
+            <span>{("0" + Math.floor((time / 60000) % 60)).slice(-2)}</span>:
+            <span>{("0" + Math.floor((time / 1000) % 60)).slice(-2)}</span>:
+            <span>{("0" + Math.floor((time / 10) % 100)).slice(-2)}</span>
+          </h3>
           <div className="button-container">
-            <button>Start/Stop</button>
-            <button>Reset</button>
+            {running ? (
+              <button onClick={() => setRunning(false)}>Stop</button>
+            ) : (
+              <button onClick={() => setRunning(true)}>Start</button>
+            )}
+            <button
+              onClick={() => {
+                setTime(0);
+              }}
+            >
+              Reset
+            </button>
           </div>
         </div>
       </section>
