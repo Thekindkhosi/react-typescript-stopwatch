@@ -36,6 +36,7 @@ function App() {
             <button
               onClick={() => {
                 setTime(0);
+                setRunning(false);
               }}
             >
               Reset
