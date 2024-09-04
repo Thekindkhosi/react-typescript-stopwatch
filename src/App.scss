@@ -25,6 +25,12 @@ section {
       justify-content: space-around;
       align-items: center;
       padding: 15px;
+      @media screen and (max-width: 1024px) {
+        height: 85px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
       button {
         padding: 10px 25px;
         border: none;
